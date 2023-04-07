@@ -1,4 +1,4 @@
-package api
+package service
 
 import (
 	"errors"
@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestNewAPIError(t *testing.T) {
+func TestNewServiceError(t *testing.T) {
 	type args struct {
 		text string
 	}
@@ -20,18 +20,18 @@ func TestNewAPIError(t *testing.T) {
 			args: args{
 				text: "Test Error Text",
 			},
-			wantErr: &apiError{data: "Test Error Text"},
+			wantErr: &serviceError{data: "Test Error Text"},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			err := NewAPIError(tt.args.text)
+			err := NewServiceError(tt.args.text)
 			assert.Equal(t, tt.wantErr, err)
 		})
 	}
 }
 
-func Test_apiError_Error(t *testing.T) {
+func Test_serviceError_Error(t *testing.T) {
 	type fields struct {
 		data string
 	}
@@ -50,7 +50,7 @@ func Test_apiError_Error(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			re := &apiError{
+			re := &serviceError{
 				data: tt.fields.data,
 			}
 			assert.Equalf(t, tt.want, re.Error(), "Error()")
