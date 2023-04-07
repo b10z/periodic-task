@@ -10,14 +10,14 @@ import (
 const timeFormat = "20060102T150405Z"
 
 type TimestampHandler struct {
-	taskService *service.TaskService
+	taskService service.TaskServiceInt
 }
 
 type TimestampHandlerInt interface {
 	GetTimestamp(w http.ResponseWriter, r *http.Request)
 }
 
-func NewTimestampHandler(ts *service.TaskService) *TimestampHandler {
+func NewTimestampHandler(ts service.TaskServiceInt) *TimestampHandler {
 	return &TimestampHandler{
 		taskService: ts,
 	}
