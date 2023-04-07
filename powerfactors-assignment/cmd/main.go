@@ -23,7 +23,7 @@ func main() {
 		logger.Fatal("address and port arguments are required")
 	}
 
-	// initialization
+	// initializations
 	router := mux.NewRouter()
 	httpServer := &http.Server{
 		Addr: args[0] + `:` + args[1],
@@ -31,7 +31,7 @@ func main() {
 
 	taskService := service.NewTaskService(logger)
 	timestampHandler := api.NewTimestampHandler(taskService)
-	server := server.NewServer(router, logger, httpServer, timestampHandler)
+	server := server.NewListener(router, logger, httpServer, timestampHandler)
 
 	shutdown := make(chan os.Signal, 1)
 	signal.Notify(shutdown, os.Interrupt, syscall.SIGTERM, syscall.SIGINT, syscall.SIGTERM, syscall.SIGHUP, syscall.SIGQUIT)
@@ -44,7 +44,7 @@ func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	if err := httpServer.Shutdown(ctx); err != nil {
-		logger.Fatal("Server shutdown failed: %v", zap.Error(err))
+		logger.Fatal("Listener shutdown failed: %v", zap.Error(err))
 	}
 
 	logger.Info("Service gracefully stopped")

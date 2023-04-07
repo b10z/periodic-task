@@ -8,20 +8,20 @@ import (
 	"powerfactors/assignment/internal/api"
 )
 
-type Server struct {
+type Listener struct {
 	router           *mux.Router
 	logger           *zap.Logger
 	httpServer       *http.Server
 	timestampHandler api.TimestampHandlerInt
 }
 
-type ServerInt interface {
+type ListenerInt interface {
 	Route()
 	Start()
 }
 
-func NewServer(rt *mux.Router, log *zap.Logger, server *http.Server, tmHandler api.TimestampHandlerInt) Server {
-	return Server{
+func NewListener(rt *mux.Router, log *zap.Logger, server *http.Server, tmHandler api.TimestampHandlerInt) Listener {
+	return Listener{
 		router:           rt,
 		logger:           log,
 		httpServer:       server,
@@ -29,14 +29,14 @@ func NewServer(rt *mux.Router, log *zap.Logger, server *http.Server, tmHandler a
 	}
 }
 
-func (s *Server) Route() {
+func (s *Listener) Route() {
 	s.router.HandleFunc("/ptlist", s.timestampHandler.GetTimestamp).Methods(http.MethodGet)
 
 	s.httpServer.Handler = s.router
 }
 
-func (s *Server) Start() {
-	s.logger.Info(fmt.Sprintf("Start Server on %s\n", s.httpServer.Addr))
+func (s *Listener) Start() {
+	s.logger.Info(fmt.Sprintf("Start Listener on %s\n", s.httpServer.Addr))
 
 	err := s.httpServer.ListenAndServe()
 	if err != nil {
