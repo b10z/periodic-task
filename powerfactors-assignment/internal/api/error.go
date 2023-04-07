@@ -1,6 +1,6 @@
 package api
 
-func NewApiError(text string) error {
+func NewAPIError(text string) error {
 	return &apiError{text}
 }
 

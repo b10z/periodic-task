@@ -21,7 +21,7 @@ func NewTaskService(logger *zap.Logger) *TaskService {
 	}
 }
 
-func (ts *TaskService) GetTimestamps(period string, timezone *time.Location, timestamp1, timestamp2 time.Time) ([]string, error) {
+func (ts *TaskService) GenerateTimestampService(period string, timezone *time.Location, timestamp1, timestamp2 time.Time) ([]string, error) {
 	timestampInLocation1 := timestamp1.In(timezone)
 	timestampInLocation2 := timestamp2.In(timezone)
 
@@ -39,7 +39,6 @@ func (ts *TaskService) GetTimestamps(period string, timezone *time.Location, tim
 			return nil, NewServiceError("invalid period parameter")
 		}
 		duration = time.Hour
-		break
 	case "1d":
 		timeDuration := timestamp1.AddDate(0, 0, 1)
 		if timeDuration.After(timestamp2) {
@@ -47,7 +46,6 @@ func (ts *TaskService) GetTimestamps(period string, timezone *time.Location, tim
 			return nil, NewServiceError("invalid period parameter")
 		}
 		duration = timeDuration.Sub(timestamp1)
-		break
 	case "1mo":
 		timeDuration := timestamp1.AddDate(0, 1, 0)
 		if timeDuration.After(timestamp2) {
@@ -55,7 +53,6 @@ func (ts *TaskService) GetTimestamps(period string, timezone *time.Location, tim
 			return nil, NewServiceError("invalid period parameter")
 		}
 		duration = timeDuration.Sub(timestamp1)
-		break
 	case "1y":
 		timeDuration := timestamp1.AddDate(1, 0, 0)
 		if timeDuration.After(timestamp2) {
@@ -63,7 +60,6 @@ func (ts *TaskService) GetTimestamps(period string, timezone *time.Location, tim
 			return nil, NewServiceError("invalid period parameter")
 		}
 		duration = timeDuration.Sub(timestamp1)
-		break
 	default:
 		ts.logger.Error("parameter period is unknown")
 		return nil, NewServiceError("invalid period parameter")

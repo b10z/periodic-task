@@ -11,7 +11,7 @@ import (
 type Server struct {
 	router           *mux.Router
 	logger           *zap.Logger
-	httpServer       http.Server
+	httpServer       *http.Server
 	timestampHandler api.TimestampHandlerInt
 }
 
@@ -24,7 +24,7 @@ func NewServer(rt *mux.Router, log *zap.Logger, server *http.Server, tmHandler a
 	return Server{
 		router:           rt,
 		logger:           log,
-		httpServer:       *server,
+		httpServer:       server,
 		timestampHandler: tmHandler,
 	}
 }

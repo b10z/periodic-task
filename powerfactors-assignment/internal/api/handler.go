@@ -23,7 +23,7 @@ func NewTimestampHandler(ts *service.TaskService) *TimestampHandler {
 	}
 }
 
-type errorJson struct {
+type errorJSON struct {
 	Status string `json:"status"`
 	Desc   string `json:"desc"`
 }
@@ -32,19 +32,19 @@ func (th *TimestampHandler) GetTimestamp(w http.ResponseWriter, r *http.Request)
 	w.Header().Set("Content-Type", "application/json")
 	if len(r.URL.Query()) < 4 {
 		w.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(w).Encode(json.NewEncoder(w).Encode(&errorJson{
+		json.NewEncoder(w).Encode(&errorJSON{
 			Status: "error",
-			Desc:   NewApiError("invalid number of parameters").Error(),
-		}))
+			Desc:   NewAPIError("invalid number of parameters").Error(),
+		})
 		return
 	}
 
 	period := r.URL.Query().Get("period")
 	if period == "" {
 		w.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(w).Encode(&errorJson{
+		json.NewEncoder(w).Encode(&errorJSON{
 			Status: "error",
-			Desc:   NewApiError("invalid period parameter").Error(),
+			Desc:   NewAPIError("invalid period parameter").Error(),
 		})
 		return
 	}
@@ -52,9 +52,9 @@ func (th *TimestampHandler) GetTimestamp(w http.ResponseWriter, r *http.Request)
 	timezone, err := time.LoadLocation(r.URL.Query().Get("tz"))
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(w).Encode(&errorJson{
+		json.NewEncoder(w).Encode(&errorJSON{
 			Status: "error",
-			Desc:   NewApiError("invalid tz parameter").Error(),
+			Desc:   NewAPIError("invalid tz parameter").Error(),
 		})
 		return
 	}
@@ -62,9 +62,9 @@ func (th *TimestampHandler) GetTimestamp(w http.ResponseWriter, r *http.Request)
 	timestamp1, err := time.Parse(timeFormat, r.URL.Query().Get("t1"))
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(w).Encode(&errorJson{
+		json.NewEncoder(w).Encode(&errorJSON{
 			Status: "error",
-			Desc:   NewApiError("invalid t1 parameter").Error(),
+			Desc:   NewAPIError("invalid t1 parameter").Error(),
 		})
 		return
 	}
@@ -72,18 +72,18 @@ func (th *TimestampHandler) GetTimestamp(w http.ResponseWriter, r *http.Request)
 	timestamp2, err := time.Parse(timeFormat, r.URL.Query().Get("t2"))
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(w).Encode(&errorJson{
+		json.NewEncoder(w).Encode(&errorJSON{
 			Status: "error",
-			Desc:   NewApiError("invalid t2 parameter").Error(),
+			Desc:   NewAPIError("invalid t2 parameter").Error(),
 		})
 		return
 	}
-	generatedTimestamps, err := th.taskService.GetTimestamps(period, timezone, timestamp1, timestamp2)
+	generatedTimestamps, err := th.taskService.GenerateTimestampService(period, timezone, timestamp1, timestamp2)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(w).Encode(&errorJson{
+		json.NewEncoder(w).Encode(&errorJSON{
 			Status: "error",
-			Desc:   NewApiError("error while generating the timestamps").Error(),
+			Desc:   NewAPIError("error while generating the timestamps").Error(),
 		})
 		return
 	}
