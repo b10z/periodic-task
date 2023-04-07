@@ -33,16 +33,36 @@ func (ts *TaskService) GetTimestamps(period string, timezone *time.Location, tim
 
 	switch period {
 	case "1h":
+		timeDuration := timestamp1.Add(time.Hour)
+		if timeDuration.After(timestamp2) {
+			ts.logger.Error("cannot add period based on the timestamps given")
+			return nil, NewServiceError("invalid period parameter")
+		}
 		duration = time.Hour
 		break
 	case "1d":
-		duration = timestamp1.AddDate(0, 0, 1).Sub(timestamp1)
+		timeDuration := timestamp1.AddDate(0, 0, 1)
+		if timeDuration.After(timestamp2) {
+			ts.logger.Error("cannot add period based on the timestamps given")
+			return nil, NewServiceError("invalid period parameter")
+		}
+		duration = timeDuration.Sub(timestamp1)
 		break
 	case "1mo":
-		duration = timestamp1.AddDate(0, 1, 0).Sub(timestamp1)
+		timeDuration := timestamp1.AddDate(0, 1, 0)
+		if timeDuration.After(timestamp2) {
+			ts.logger.Error("cannot add period based on the timestamps given")
+			return nil, NewServiceError("invalid period parameter")
+		}
+		duration = timeDuration.Sub(timestamp1)
 		break
 	case "1y":
-		duration = timestamp1.AddDate(1, 0, 0).Sub(timestamp1)
+		timeDuration := timestamp1.AddDate(1, 0, 0)
+		if timeDuration.After(timestamp2) {
+			ts.logger.Error("cannot add period based on the timestamps given")
+			return nil, NewServiceError("invalid period parameter")
+		}
+		duration = timeDuration.Sub(timestamp1)
 		break
 	default:
 		ts.logger.Error("parameter period is unknown")
