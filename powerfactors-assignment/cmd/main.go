@@ -29,15 +29,15 @@ func main() {
 		Addr: args[0] + `:` + args[1],
 	}
 
-	taskService := service.NewTaskService(logger)
-	timestampHandler := api.NewTimestampHandler(taskService)
-	server := server.NewListener(router, logger, httpServer, timestampHandler)
+	taskServiceInt := service.NewTaskService(logger)
+	timestampHandlerInt := api.NewTimestampHandler(taskServiceInt)
+	serverInt := server.NewListener(router, logger, httpServer, timestampHandlerInt)
 
 	shutdown := make(chan os.Signal, 1)
 	signal.Notify(shutdown, os.Interrupt, syscall.SIGTERM, syscall.SIGINT, syscall.SIGTERM, syscall.SIGHUP, syscall.SIGQUIT)
 
-	server.Route()
-	go server.Start()
+	serverInt.Route()
+	go serverInt.Start()
 
 	// graceful shutdown
 	<-shutdown
@@ -46,7 +46,5 @@ func main() {
 	if err := httpServer.Shutdown(ctx); err != nil {
 		logger.Fatal("Listener shutdown failed: %v", zap.Error(err))
 	}
-
 	logger.Info("Service gracefully stopped")
-
 }

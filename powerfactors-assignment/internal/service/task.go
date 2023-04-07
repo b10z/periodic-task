@@ -12,7 +12,7 @@ type TaskService struct {
 }
 
 type TaskServiceInt interface {
-	GetTimestamp(period string, timezone time.Location, timestamp1, timestamp2 time.Time) ([]string, error)
+	GenerateTimestampService(period string, timezone *time.Location, startDate, endDate time.Time) ([]string, error)
 }
 
 func NewTaskService(logger *zap.Logger) *TaskService {
@@ -21,55 +21,62 @@ func NewTaskService(logger *zap.Logger) *TaskService {
 	}
 }
 
-func (ts *TaskService) GenerateTimestampService(period string, timezone *time.Location, timestamp1, timestamp2 time.Time) ([]string, error) {
-	timestampInLocation1 := timestamp1.In(timezone)
-	timestampInLocation2 := timestamp2.In(timezone)
+func (ts *TaskService) GenerateTimestampService(period string, timezone *time.Location, startDate, endDate time.Time) ([]string, error) {
+	timestampInLocation1 := startDate.In(timezone)
+	timestampInLocation2 := endDate.In(timezone)
 
 	if timestampInLocation1.After(timestampInLocation2) {
+		ts.logger.Error("startDate is after the endDate")
 		return nil, NewServiceError("t1 should be before t2")
 	}
+
+	duration, err := getDurationFromPeriod(period, startDate, endDate)
+	if err != nil {
+		ts.logger.Error("error while getting duration from period")
+		return nil, err
+	}
+
+	var generatedTimestamps []string
+	for startDate.Before(endDate) {
+		generatedTimestamps = append(generatedTimestamps, startDate.Format(timeFormat))
+		startDate = startDate.Add(duration)
+	}
+
+	return generatedTimestamps, nil
+}
+
+func getDurationFromPeriod(period string, startDate, endDate time.Time) (time.Duration, error) {
 
 	var duration time.Duration
 
 	switch period {
 	case "1h":
-		timeDuration := timestamp1.Add(time.Hour)
-		if timeDuration.After(timestamp2) {
-			ts.logger.Error("cannot add period based on the timestamps given")
-			return nil, NewServiceError("invalid period parameter")
+		timeDuration := startDate.Add(time.Hour)
+		if timeDuration.After(endDate) {
+			return 0, NewServiceError("period parameter out of range")
 		}
-		duration = time.Hour
+		duration = timeDuration.Sub(startDate)
 	case "1d":
-		timeDuration := timestamp1.AddDate(0, 0, 1)
-		if timeDuration.After(timestamp2) {
-			ts.logger.Error("cannot add period based on the timestamps given")
-			return nil, NewServiceError("invalid period parameter")
+		timeDuration := startDate.AddDate(0, 0, 1)
+		if timeDuration.After(endDate) {
+			return 0, NewServiceError("period parameter out of range")
 		}
-		duration = timeDuration.Sub(timestamp1)
+		duration = timeDuration.Sub(startDate)
 	case "1mo":
-		timeDuration := timestamp1.AddDate(0, 1, 0)
-		if timeDuration.After(timestamp2) {
-			ts.logger.Error("cannot add period based on the timestamps given")
-			return nil, NewServiceError("invalid period parameter")
+		timeDuration := startDate.AddDate(0, 1, 0)
+		if timeDuration.After(endDate) {
+			return 0, NewServiceError("period parameter out of range")
 		}
-		duration = timeDuration.Sub(timestamp1)
+		duration = timeDuration.Sub(startDate)
 	case "1y":
-		timeDuration := timestamp1.AddDate(1, 0, 0)
-		if timeDuration.After(timestamp2) {
-			ts.logger.Error("cannot add period based on the timestamps given")
-			return nil, NewServiceError("invalid period parameter")
+		timeDuration := startDate.AddDate(1, 0, 0)
+		if timeDuration.After(endDate) {
+			return 0, NewServiceError("period parameter out of range")
 		}
-		duration = timeDuration.Sub(timestamp1)
+		duration = timeDuration.Sub(startDate)
 	default:
-		ts.logger.Error("parameter period is unknown")
-		return nil, NewServiceError("invalid period parameter")
+		return 0, NewServiceError("invalid period parameter")
 	}
 
-	var generatedTimestamps []string
-	for timestamp1.Before(timestamp2) {
-		generatedTimestamps = append(generatedTimestamps, timestamp1.Format(timeFormat))
-		timestamp1 = timestamp1.Add(duration)
-	}
-
-	return generatedTimestamps, nil
+	return duration, nil
 }

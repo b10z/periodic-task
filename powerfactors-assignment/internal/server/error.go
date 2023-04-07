@@ -1,14 +1,14 @@
 package server
 
-func NewServerError(text string, err error) error {
-	return &serverError{text, err}
+func NewListenerError(text string, err error) error {
+	return &ListenerError{text, err}
 }
 
-type serverError struct {
+type ListenerError struct {
 	data string
 	err  error
 }
 
-func (re *serverError) Error() string {
+func (re *ListenerError) Error() string {
 	return re.data
 }
