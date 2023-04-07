@@ -46,36 +46,32 @@ func (ts *TaskService) GenerateTimestampService(period string, timezone *time.Lo
 }
 
 func getDurationFromPeriod(period string, startDate, endDate time.Time) (time.Duration, error) {
-	var duration time.Duration
-
 	switch period {
 	case "1h":
 		timeDuration := startDate.Add(time.Hour)
 		if timeDuration.After(endDate) {
 			return 0, NewServiceError("period parameter out of range")
 		}
-		duration = timeDuration.Sub(startDate)
+		return timeDuration.Sub(startDate), nil
 	case "1d":
 		timeDuration := startDate.AddDate(0, 0, 1)
 		if timeDuration.After(endDate) {
 			return 0, NewServiceError("period parameter out of range")
 		}
-		duration = timeDuration.Sub(startDate)
+		return timeDuration.Sub(startDate), nil
 	case "1mo":
 		timeDuration := startDate.AddDate(0, 1, 0)
 		if timeDuration.After(endDate) {
 			return 0, NewServiceError("period parameter out of range")
 		}
-		duration = timeDuration.Sub(startDate)
+		return timeDuration.Sub(startDate), nil
 	case "1y":
 		timeDuration := startDate.AddDate(1, 0, 0)
 		if timeDuration.After(endDate) {
 			return 0, NewServiceError("period parameter out of range")
 		}
-		duration = timeDuration.Sub(startDate)
+		return timeDuration.Sub(startDate), nil
 	default:
 		return 0, NewServiceError("invalid period parameter")
 	}
-
-	return duration, nil
 }
