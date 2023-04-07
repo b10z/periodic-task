@@ -1,0 +1,23 @@
+FROM golang:1.20.2-alpine3.16 as builder
+
+RUN apk update
+RUN apk add git
+
+WORKDIR /app
+
+COPY go.mod go.sum ./
+
+RUN go mod download
+RUN go install github.com/golang/mock/mockgen@v1.6.0
+RUN go install github.com/joho/godotenv/cmd/godotenv@v1.4.0
+
+FROM golang:1.20.2-alpine3.16
+
+RUN apk update
+RUN apk add build-base bash
+
+COPY --from=builder /go /go
+
+WORKDIR /app
+
+COPY . .
