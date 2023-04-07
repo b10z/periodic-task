@@ -30,7 +30,6 @@ func NewServer(rt *mux.Router, log *zap.Logger, server *http.Server, tmHandler a
 }
 
 func (s *Server) Route() {
-	//s.router.HandleFunc("/populate", s.populate.Populate).Methods(http.MethodPost)
 	s.router.HandleFunc("/ptlist", s.timestampHandler.GetTimestamp).Methods(http.MethodGet)
 
 	s.httpServer.Handler = s.router
