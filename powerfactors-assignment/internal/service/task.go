@@ -46,7 +46,6 @@ func (ts *TaskService) GenerateTimestampService(period string, timezone *time.Lo
 }
 
 func getDurationFromPeriod(period string, startDate, endDate time.Time) (time.Duration, error) {
-
 	var duration time.Duration
 
 	switch period {
