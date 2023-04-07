@@ -1,20 +1,24 @@
 package service
 
 import (
+	"go.uber.org/zap"
 	"time"
 )
 
 const timeFormat = "20060102T150405Z"
 
 type TaskService struct {
+	logger *zap.Logger
 }
 
 type TaskServiceInt interface {
 	GetTimestamp(period string, timezone time.Location, timestamp1, timestamp2 time.Time) ([]string, error)
 }
 
-func NewTaskService() *TaskService {
-	return &TaskService{}
+func NewTaskService(logger *zap.Logger) *TaskService {
+	return &TaskService{
+		logger: logger,
+	}
 }
 
 func (ts *TaskService) GetTimestamps(period string, timezone *time.Location, timestamp1, timestamp2 time.Time) ([]string, error) {
@@ -41,14 +45,12 @@ func (ts *TaskService) GetTimestamps(period string, timezone *time.Location, tim
 		duration = timestamp1.AddDate(1, 0, 0).Sub(timestamp1)
 		break
 	default:
+		ts.logger.Error("parameter period is unknown")
 		return nil, NewServiceError("invalid period parameter")
 	}
 
 	var generatedTimestamps []string
 	for timestamp1.Before(timestamp2) {
-		if timestamp1.Add(duration).After(timestamp2) {
-			break
-		}
 		generatedTimestamps = append(generatedTimestamps, timestamp1.Format(timeFormat))
 		timestamp1 = timestamp1.Add(duration)
 	}

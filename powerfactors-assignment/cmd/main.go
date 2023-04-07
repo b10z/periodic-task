@@ -30,7 +30,7 @@ func main() {
 		Addr: args[0] + `:` + args[1],
 	}
 
-	taskService := service.NewTaskService()
+	taskService := service.NewTaskService(logger)
 	timestampHandler := api.NewTimestampHandler(taskService)
 	server := server.NewServer(router, logger, httpServer, timestampHandler)
 
