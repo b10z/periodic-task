@@ -15,10 +15,10 @@ The project is using **Makefile**, a **docker-compose.yml** (for expandability) 
 Using the endpoint bellow we can generate new timestamps. <br/>
 
 ```sh
-GET - /plist 
+GET - /ptlist 
 ```
 
-#### **/plist - Supported Parameters**
+#### **/ptlist - Supported Parameters**
 
 * `period`:  **REQUIRED** <br/> _Is used to set the period (step) between the generated timestamps created from the periodic task. <br/> Currently supporting values: <br/> **"1h"** - for 1 hour, **"1d"** - for 1 day, **"1mo"** - for 1 month, **"1y"**- for 1 year_
 * `tz`: **REQUIRED** <br/> _Is used to set the timezone of the timestamps.  <br/> Accepted values: <br/> A valid timezone. For example **Europe/Athens**_
