@@ -23,13 +23,6 @@ endif
 	@docker run --volume "$(PWD)/powerfactors-assignment":/app --workdir /app \
 	assessment-test-build /bin/bash -c "mockgen -source=${file} -destination=mocks/${file}"
 
-tests.tests-unit:
-	make tests.test-build
-	@docker run \
-		--rm \
-		--volume "$(PWD)/powerfactors-assignment":/app \
-		--workdir /app \
-		assessment-test-build go test -short -cover -count=1 ./...
 
 tests.tests-all:
 	make tests.test-build
