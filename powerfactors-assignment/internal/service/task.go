@@ -45,6 +45,8 @@ func (ts *TaskService) GenerateTimestampService(period string, timezone *time.Lo
 	return generatedTimestamps, nil
 }
 
+// In getDurationFromPeriod new periods can easily be declared. Just add a new case inside the switch, and return the duration from the startDate
+// as done for the other periods. Then, the algorithm will handle accordingly any duration given.
 func getDurationFromPeriod(period string, startDate, endDate time.Time) (time.Duration, error) {
 	switch period {
 	case "1h":
