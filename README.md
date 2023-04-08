@@ -83,7 +83,7 @@ Response:
 
  <br/> 
 
-### 🛠 OTHER MAKEFILES COMMANDS: 
+### 🛠 OTHER MAKEFILE COMMANDS: 
 
 * `make app.stop`: <br/> _This command actually runs **"docker compose stop"**_
 * `make tests.generate-mock`: <br/> _This command takes as an input a .go file with an interface and generates a mock file for tests needs._ 
