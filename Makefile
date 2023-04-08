@@ -35,4 +35,4 @@ tests.tests-all:
 tests.test-build:
 	@docker build \
 		--tag assessment-test-build \
-		-f powerfactors-assignment/Dockerfile.test ./powerfactors-assignment
+		-f powerfactors-assignment/deploy/test/Dockerfile.test ./powerfactors-assignment

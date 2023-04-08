@@ -4,7 +4,7 @@ services:
     restart: always
     build:
       context: ./powerfactors-assignment
-      dockerfile: Dockerfile.dev
+      dockerfile: deploy/development/Dockerfile.dev
     ports:
       - "40000:40000"
       - ${SERVER_PORT:-8000}:${SERVER_PORT:-8000}
