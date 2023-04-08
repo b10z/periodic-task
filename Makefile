@@ -6,7 +6,7 @@ endif
 ifndef PORT
 	@echo "port is missing default value (8000) was set"
 endif
-	make stop
+	make app.stop
 	docker compose build
 	SERVER_ADDRESS=$(ADDR) SERVER_PORT=$(PORT) docker-compose up -d
 
@@ -19,12 +19,12 @@ ifndef file
 	@echo "file parameter is missing"
 	@exit 1
 endif
-	make test-build
+	make tests.test-build
 	@docker run --volume "$(PWD)/powerfactors-assignment":/app --workdir /app \
 	assessment-test-build /bin/bash -c "mockgen -source=${file} -destination=mocks/${file}"
 
 tests.tests-unit:
-	make test-build
+	make tests.test-build
 	@docker run \
 		--rm \
 		--volume "$(PWD)/powerfactors-assignment":/app \
@@ -32,7 +32,7 @@ tests.tests-unit:
 		assessment-test-build go test -short -cover -count=1 ./...
 
 tests.tests-all:
-	make test-build
+	make tests.test-build
 	@docker run \
 		--rm \
 		--volume "$(PWD)/powerfactors-assignment":/app \
