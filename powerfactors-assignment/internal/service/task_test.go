@@ -173,6 +173,57 @@ func TestTaskService_GenerateTimestampService(t *testing.T) {
 			want:    nil,
 			wantErr: NewServiceError("period parameter out of range"),
 		},
+		{
+			name: "GenerateTimestampService failed test with period of 1h and dates out of range",
+			fields: fields{
+				logger: zap.NewNop(),
+			},
+			args: args{
+				period:    "1h",
+				timezone:  nil,
+				startDate: time.Date(2021, 02, 14, 21, 46, 03, 0, time.UTC),
+				endDate:   time.Date(2021, 02, 14, 21, 46, 03, 0, time.UTC),
+			},
+			testData: testData{
+				timezone: "Europe/Athens",
+			},
+			want:    nil,
+			wantErr: NewServiceError("period parameter out of range"),
+		},
+		{
+			name: "GenerateTimestampService failed test with period of 1mo and dates out of range",
+			fields: fields{
+				logger: zap.NewNop(),
+			},
+			args: args{
+				period:    "1mo",
+				timezone:  nil,
+				startDate: time.Date(2021, 02, 16, 21, 46, 03, 0, time.UTC),
+				endDate:   time.Date(2021, 03, 14, 21, 46, 03, 0, time.UTC),
+			},
+			testData: testData{
+				timezone: "Europe/Athens",
+			},
+			want:    nil,
+			wantErr: NewServiceError("period parameter out of range"),
+		},
+		{
+			name: "GenerateTimestampService failed test with period of 1h and dates out of range",
+			fields: fields{
+				logger: zap.NewNop(),
+			},
+			args: args{
+				period:    "1y",
+				timezone:  nil,
+				startDate: time.Date(2021, 06, 14, 20, 46, 03, 0, time.UTC),
+				endDate:   time.Date(2022, 02, 14, 21, 46, 03, 0, time.UTC),
+			},
+			testData: testData{
+				timezone: "Europe/Athens",
+			},
+			want:    nil,
+			wantErr: NewServiceError("period parameter out of range"),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
