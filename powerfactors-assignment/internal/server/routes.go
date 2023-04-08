@@ -43,5 +43,4 @@ func (s *Listener) Start() {
 		s.logger.Fatal("Error returned from http.listenAndServe", zap.Error(err))
 		return
 	}
-
 }
