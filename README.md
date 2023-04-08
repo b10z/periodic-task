@@ -1,6 +1,6 @@
 # periodic-task
 
-### How to start the project: 
+### 🛫 How to start the project: 
 
 * clone the repo
 * **cd** at **/periodic-task** directory
@@ -9,8 +9,9 @@
 
 The project is using **Makefile**, a **docker-compose.yml** (for expandability) and **three dockerfiles** for **development, testing and production builds**. 
 
+ <br/> 
 
-### API DOCUMENTATION
+### 💼 API DOCUMENTATION: 
 Using the endpoint bellow we can generate new timestamps. <br/>
 
 * **GET - /plist** 
@@ -25,7 +26,9 @@ Using the endpoint bellow we can generate new timestamps. <br/>
 
 Please note that the addition of new periods is an extremely easy process. Some comments about it can be found here **/internal/task.go:48**
 
-### EXAMPLES
+ <br/> 
+
+### 🔦 EXAMPLES: 
 
 **A successful GET** will result to an answer like this: 
 
@@ -48,8 +51,9 @@ Please note that the addition of new periods is an extremely easy process. Some 
 "desc": "error while generating the timestamps"
 }`
 
+ <br/> 
 
-### OTHER MAKEFILES COMMANDS
+### 🛠 OTHER MAKEFILES COMMANDS: 
 
 * **make app.stop**: <br/> This command actually runs **"docker compose stop"**
 * **make tests.generate-mock**: <br/> This command takes as an input a .go file with an interface and generates a mock file for tests needs. 
