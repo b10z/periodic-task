@@ -20,10 +20,10 @@ GET - /plist
 
 #### **/plist - Supported Parameters**
 
-* **period**:  **REQUIRED** <br/> Is used to set the period (step) between the generated timestamps created from the periodic task. <br/> Currently supporting values: <br/> **"1h"** - for 1 hour, **"1d"** - for 1 day, **"1mo"** - for 1 month, **"1y"**- for 1 year
-* **tz**: **REQUIRED** <br/> Is used to set the timezone of the timestamps.  <br/> Accepted values: <br/> A valid timezone. For example **Europe/Athens**
-* **t1**:  **REQUIRED**  <br/> Is used to set the first timestamp (startDate) of the periodic task. <br/> Accepted values: <br/> A valid datetime timestamp. For example **20210214T204603Z**
-* **t2**:  **REQUIRED**  <br/> Is used to set the last timestamp (endDate) of the periodic task. <br/> Accepted values: <br/> A valid datetime timestamp. For example **20210215T204603Z**
+* **period**:  **REQUIRED** <br/> _Is used to set the period (step) between the generated timestamps created from the periodic task. <br/> Currently supporting values: <br/> **"1h"** - for 1 hour, **"1d"** - for 1 day, **"1mo"** - for 1 month, **"1y"**- for 1 year_
+* **tz**: **REQUIRED** <br/> _Is used to set the timezone of the timestamps.  <br/> Accepted values: <br/> A valid timezone. For example **Europe/Athens**_
+* **t1**:  **REQUIRED**  <br/> _Is used to set the first timestamp (startDate) of the periodic task. <br/> Accepted values: <br/> A valid datetime timestamp. For example **20210214T204603Z**_
+* **t2**:  **REQUIRED**  <br/> _Is used to set the last timestamp (endDate) of the periodic task. <br/> Accepted values: <br/> A valid datetime timestamp. For example **20210215T204603Z**_
 
 Please note that the addition of new periods is an extremely easy process. Some comments about it can be found here **/internal/task.go:48**
 
@@ -36,7 +36,12 @@ Please note that the addition of new periods is an extremely easy process. Some 
 <details>
 <summary>Successful GET example </summary>
 <br>
+
+```sh
 0.0.0.0:8080/ptlist?tz=Europe/Athens&t1=20210214T200000Z&t2=20210219T200000Z&period=1d
+```
+
+<br>
 
 `[
 "20210214T200000Z",
@@ -50,8 +55,14 @@ Please note that the addition of new periods is an extremely easy process. Some 
 
 <details>
 <summary> Failed GET example </summary>
+
 <br>
+
+```sh
 0.0.0.0:8080/ptlist?tz=Europe/Athens&t1=20210214T200000Z&t2=20210219T200000Z&period=INVALID_PERIOD
+```
+
+<br>
 
 `{
 "status": "error",
@@ -66,10 +77,10 @@ Please note that the addition of new periods is an extremely easy process. Some 
 
 ### 🛠 OTHER MAKEFILES COMMANDS: 
 
-* **make app.stop**: <br/> This command actually runs **"docker compose stop"**
-* **make tests.generate-mock**: <br/> This command takes as an input a .go file with an interface and generates a mock file for tests needs. 
-* **make tests.tests-all**: <br/> This command runs all the test files inside the project and provides a coverage number for each package.  
-* **make tests.test-build**: <br/> This command is used from make tests.tests-all in order to create a test build for the application (using dockerfile.test) 
+* **make app.stop**: <br/> _This command actually runs **"docker compose stop"**_
+* **make tests.generate-mock**: <br/> _This command takes as an input a .go file with an interface and generates a mock file for tests needs._ 
+* **make tests.tests-all**: <br/> _This command runs all the test files inside the project and provides a coverage number for each package._  
+* **make tests.test-build**: <br/> _This command is used from make tests.tests-all in order to create a test build for the application (using dockerfile.test)_ 
 
 
 
