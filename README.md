@@ -37,12 +37,16 @@ Please note that the addition of new periods is an extremely easy process. Some 
 <summary>Successful GET example </summary>
 <br>
 
+ Request:
+ 
 ```sh
 0.0.0.0:8080/ptlist?tz=Europe/Athens&t1=20210214T200000Z&t2=20210219T200000Z&period=1d
 ```
 
 <br>
 
+ Response:
+ 
 `[
 "20210214T200000Z",
 "20210215T200000Z",
@@ -57,12 +61,16 @@ Please note that the addition of new periods is an extremely easy process. Some 
 <summary> Failed GET example </summary>
 
 <br>
+ 
+ Request:
 
 ```sh
 0.0.0.0:8080/ptlist?tz=Europe/Athens&t1=20210214T200000Z&t2=20210219T200000Z&period=INVALID_PERIOD
 ```
 
 <br>
+ 
+Response:
 
 `{
 "status": "error",
