@@ -65,7 +65,7 @@ Please note that the addition of new periods is an extremely easy process. Some 
  Request:
 
 ```sh
-0.0.0.0:8080/ptlist?tz=Europe/Athens&t1=20210214T200000Z&t2=20210219T200000Z&period=INVALID_PERIOD
+0.0.0.0:8080/ptlist?tz=Europe/Athens&t1=20210214T200000Z&t2=20210219T200000Z
 ```
 
 <br>
@@ -74,7 +74,7 @@ Response:
 
 `{
 "status": "error",
-"desc": "error while generating the timestamps"
+"desc": "invalid period parameter"
 }`
 </details>
 
