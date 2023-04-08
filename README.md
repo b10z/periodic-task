@@ -14,15 +14,16 @@ The project is using **Makefile**, a **docker-compose.yml** (for expandability) 
 ### 💼 API DOCUMENTATION: 
 Using the endpoint bellow we can generate new timestamps. <br/>
 
-* **GET - /plist** 
-
+```sh
+GET - /plist 
+```
 
 #### **/plist - Supported Parameters**
 
-* **period**: <br/> Is used to set the period (step) between the generated timestamps created from the periodic task. <br/> Currently supporting values: <br/> **"1h"** - for 1 hour, **"1d"** - for 1 day, **"1mo"** - for 1 month, **"1y"**- for 1 year
-* **tz**:  <br/> Is used to set the timezone of the timestamps.  <br/> Accepted values: <br/> A valid timezone. For example **Europe/Athens**
-* **t1**:  <br/> Is used to set the first timestamp (startDate) of the periodic task. <br/> Accepted values: <br/> A valid datetime timestamp. For example **20210214T204603Z**
-* **t2**:  <br/> Is used to set the last timestamp (endDate) of the periodic task. <br/> Accepted values: <br/> A valid datetime timestamp. For example **20210215T204603Z**
+* **period**:  **REQUIRED** <br/> Is used to set the period (step) between the generated timestamps created from the periodic task. <br/> Currently supporting values: <br/> **"1h"** - for 1 hour, **"1d"** - for 1 day, **"1mo"** - for 1 month, **"1y"**- for 1 year
+* **tz**: **REQUIRED** <br/> Is used to set the timezone of the timestamps.  <br/> Accepted values: <br/> A valid timezone. For example **Europe/Athens**
+* **t1**:  **REQUIRED**  <br/> Is used to set the first timestamp (startDate) of the periodic task. <br/> Accepted values: <br/> A valid datetime timestamp. For example **20210214T204603Z**
+* **t2**:  **REQUIRED**  <br/> Is used to set the last timestamp (endDate) of the periodic task. <br/> Accepted values: <br/> A valid datetime timestamp. For example **20210215T204603Z**
 
 Please note that the addition of new periods is an extremely easy process. Some comments about it can be found here **/internal/task.go:48**
 
@@ -30,9 +31,12 @@ Please note that the addition of new periods is an extremely easy process. Some 
 
 ### 🔦 EXAMPLES: 
 
-**A successful GET** will result to an answer like this: 
 
-**0.0.0.0:8080/ptlist?tz=Europe/Athens&t1=20210214T200000Z&t2=20210219T200000Z&period=1d**
+
+<details>
+<summary>Successful GET example </summary>
+<br>
+0.0.0.0:8080/ptlist?tz=Europe/Athens&t1=20210214T200000Z&t2=20210219T200000Z&period=1d
 
 `[
 "20210214T200000Z",
@@ -41,15 +45,22 @@ Please note that the addition of new periods is an extremely easy process. Some 
 "20210217T200000Z",
 "20210218T200000Z"
 ]`
+</details>
 
-**A failed GET** will result to an answer like this:
 
-**0.0.0.0:8080/ptlist?tz=Europe/Athens&t1=20210214T200000Z&t2=20210219T200000Z&period=INVALID_PERIOD**
+<details>
+<summary> Failed GET example </summary>
+<br>
+0.0.0.0:8080/ptlist?tz=Europe/Athens&t1=20210214T200000Z&t2=20210219T200000Z&period=INVALID_PERIOD
 
 `{
 "status": "error",
 "desc": "error while generating the timestamps"
 }`
+</details>
+
+
+
 
  <br/> 
 
