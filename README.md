@@ -1,4 +1,4 @@
-# periodic-task
+# Periodic-Task
 
 ### 🛫 How to start the project: 
 
