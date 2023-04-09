@@ -8,6 +8,7 @@ import (
 	"os"
 	"os/signal"
 	"powerfactors/assignment/internal/api"
+	"powerfactors/assignment/internal/helper"
 	"powerfactors/assignment/internal/server"
 	"powerfactors/assignment/internal/service"
 	"syscall"
@@ -28,15 +29,15 @@ func main() {
 	httpServer := &http.Server{
 		Addr: args[0] + `:` + args[1],
 	}
-
-	taskServiceInt := service.NewTaskService(logger)
+	generatorInt := helper.NewTimestampGenerator(logger)
+	taskServiceInt := service.NewTaskService(logger, generatorInt)
 	timestampHandlerInt := api.NewTimestampHandler(taskServiceInt)
 	serverInt := server.NewListener(router, logger, httpServer, timestampHandlerInt)
+	serverInt.Route()
 
 	shutdown := make(chan os.Signal, 1)
 	signal.Notify(shutdown, os.Interrupt, syscall.SIGTERM, syscall.SIGINT, syscall.SIGTERM, syscall.SIGHUP, syscall.SIGQUIT)
 
-	serverInt.Route()
 	go serverInt.Start()
 
 	// graceful shutdown
