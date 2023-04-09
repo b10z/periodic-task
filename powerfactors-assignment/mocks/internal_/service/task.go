@@ -34,17 +34,17 @@ func (m *MockTaskServiceInt) EXPECT() *MockTaskServiceIntMockRecorder {
 	return m.recorder
 }
 
-// GenerateTimestampService mocks base method.
-func (m *MockTaskServiceInt) GenerateTimestampService(period string, timezone *time.Location, startDate, endDate time.Time) ([]string, error) {
+// PeriodicTaskService mocks base method.
+func (m *MockTaskServiceInt) PeriodicTaskService(period string, timezone *time.Location, startDate, endDate time.Time) ([]string, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GenerateTimestampService", period, timezone, startDate, endDate)
+	ret := m.ctrl.Call(m, "PeriodicTaskService", period, timezone, startDate, endDate)
 	ret0, _ := ret[0].([]string)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// GenerateTimestampService indicates an expected call of GenerateTimestampService.
-func (mr *MockTaskServiceIntMockRecorder) GenerateTimestampService(period, timezone, startDate, endDate interface{}) *gomock.Call {
+// PeriodicTaskService indicates an expected call of PeriodicTaskService.
+func (mr *MockTaskServiceIntMockRecorder) PeriodicTaskService(period, timezone, startDate, endDate interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GenerateTimestampService", reflect.TypeOf((*MockTaskServiceInt)(nil).GenerateTimestampService), period, timezone, startDate, endDate)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PeriodicTaskService", reflect.TypeOf((*MockTaskServiceInt)(nil).PeriodicTaskService), period, timezone, startDate, endDate)
 }
