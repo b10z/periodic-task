@@ -96,7 +96,7 @@ Response:
 
 ### 📳 TEST INFORMATION
 
-All the test case given in the assessment can be found tested in [timestamp_generator_test.go](powerfactors-assignment%2Finternal%2Fhelper%2Ftimestamp_generator_test.go) with good and bad paths.
+All the test cases given in the assessment can be found tested in [timestamp_generator_test.go](powerfactors-assignment%2Finternal%2Fhelper%2Ftimestamp_generator_test.go) with good and bad paths.
 
 TEST COVERAGE PERCENTAGES:
 
