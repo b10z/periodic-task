@@ -242,7 +242,7 @@ func TestTimestampHandler_GetTimestamp(t *testing.T) {
 			}
 			tz, _ := time.LoadLocation(tt.testData.timezone)
 			tt.wWant.WriteHeader(tt.testData.statusCode)
-			th.taskService.(*mock_service.MockTaskServiceInt).EXPECT().GenerateTimestampService(tt.testData.period, tz, tt.fields.startDate, tt.fields.endDate).Return(tt.testData.serviceResult, tt.testData.serviceError).AnyTimes()
+			th.taskService.(*mock_service.MockTaskServiceInt).EXPECT().PeriodicTaskService(tt.testData.period, tz, tt.fields.startDate, tt.fields.endDate).Return(tt.testData.serviceResult, tt.testData.serviceError).AnyTimes()
 			th.GetTimestamp(tt.args.w, tt.args.r)
 			assert.Equal(t, tt.wWant.Header(), tt.args.w.Header())
 			assert.EqualValues(t, tt.wWant, tt.args.w)

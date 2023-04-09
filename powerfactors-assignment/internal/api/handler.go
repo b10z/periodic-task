@@ -78,7 +78,7 @@ func (th *TimestampHandler) GetTimestamp(w http.ResponseWriter, r *http.Request)
 		})
 		return
 	}
-	generatedTimestamps, err := th.taskService.GenerateTimestampService(period, timezone, timestamp1, timestamp2)
+	generatedTimestamps, err := th.taskService.PeriodicTaskService(period, timezone, timestamp1, timestamp2)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(&errorJSON{
