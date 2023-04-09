@@ -104,3 +104,10 @@ TEST COVERAGE PERCENTAGES:
 * `/internal/service	coverage: 100.0% of statements`
 * `/internal/helper	coverage: 100.0% of statements`
 
+### 🐛 REMOTE DEBUGGING:
+
+**Go-Delve** has been set up for **easy remote debugging**. The default remote debugging port is **40000** (can change from the docker-compose.yml). 
+
+For example, if the server address is 0.0.0.0, then attach the remote debugger on the specified port like this **0.0.0.0:40000**.
+
+
