@@ -25,7 +25,7 @@ GET - /plist
 * `t1`:  **REQUIRED**  <br/> _Is used to set the first timestamp (startDate) of the periodic task. <br/> Accepted values: <br/> A valid datetime timestamp. For example **20210214T204603Z**_
 * `t2`:  **REQUIRED**  <br/> _Is used to set the last timestamp (endDate) of the periodic task. <br/> Accepted values: <br/> A valid datetime timestamp. For example **20210215T204603Z**_
 
-Please note that the addition of new periods is an extremely easy process. Some comments about it can be found here **/internal/task.go:48**
+Please note that the addition of new periods is an extremely easy process. Some comments about it can be found here **/internal/helper/timestamp_generator.go:52**
 
  <br/> 
 
@@ -40,7 +40,7 @@ Please note that the addition of new periods is an extremely easy process. Some 
  Request:
  
 ```sh
-0.0.0.0:8080/ptlist?tz=Europe/Athens&t1=20210214T200000Z&t2=20210219T200000Z&period=1d
+0.0.0.0:8080/ptlist?period=1mo&tz=Europe/Athens&t1=20210214T204603Z&t2=20211115T123456Z
 ```
 
 <br>
@@ -48,11 +48,15 @@ Please note that the addition of new periods is an extremely easy process. Some 
  Response:
  
 `[
-"20210214T200000Z",
-"20210215T200000Z",
-"20210216T200000Z",
-"20210217T200000Z",
-"20210218T200000Z"
+"20210228T220000Z",
+"20210331T210000Z",
+"20210430T210000Z",
+"20210531T210000Z",
+"20210630T210000Z",
+"20210731T210000Z",
+"20210831T210000Z",
+"20210930T210000Z",
+"20211031T220000Z"
 ]`
 </details>
 
@@ -90,5 +94,13 @@ Response:
 * `make tests.tests-all`: <br/> _This command runs all the test files inside the project and provides a coverage number for each package._  
 * `make tests.test-build`: <br/> _This command is used from make tests.tests-all in order to create a test build for the application (using dockerfile.test)_ 
 
+### 📳 TEST INFORMATION
 
+All the test case given in the assessment can be found tested in [timestamp_generator_test.go](powerfactors-assignment%2Finternal%2Fhelper%2Ftimestamp_generator_test.go) with good and bad paths.
+
+TEST COVERAGE PERCENTAGES:
+
+* `/internal/api	coverage: 100.0% of statements`
+* `/internal/service	coverage: 100.0% of statements`
+* `/internal/helper	coverage: 100.0% of statements`
 

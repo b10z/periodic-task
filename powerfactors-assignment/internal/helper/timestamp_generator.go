@@ -49,8 +49,10 @@ func (tg TimestampGenerator) GenerateTimestamps(period string, startDate, endDat
 	return generatedTimestamps, nil
 }
 
-// In getDurationFromPeriod new periods can easily be declared. Just add a new case inside the switch, and return the new startingTimestamp and the periodic increase (the step)
-// as done for the other periods. Then, the algorithm will handle accordingly any increment given.
+// In getDurationFromPeriod new periods can easily be declared.
+// Just add a new case inside the switch, return the new startingTimestamp and
+// the periodic increase (the step) as done for the other periods. Then, the algorithm will handle accordingly any increment given.
+// Nanosecond can be also added if added in the periodicIncrease struct as well.
 func getDurationFromPeriod(period string, startDate, endDate time.Time) (time.Time, *periodicIncrease, error) {
 	switch period {
 	case "1h":
