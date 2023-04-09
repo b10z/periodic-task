@@ -94,6 +94,8 @@ Response:
 * `make tests.tests-all`: <br/> _This command runs all the test files inside the project and provides a coverage number for each package._  
 * `make tests.test-build`: <br/> _This command is used from make tests.tests-all in order to create a test build for the application (using dockerfile.test)_ 
 
+ <br/> 
+
 ### 📳 TEST INFORMATION
 
 All the test cases given in the assessment can be found tested in [timestamp_generator_test.go](powerfactors-assignment%2Finternal%2Fhelper%2Ftimestamp_generator_test.go) with good and bad paths.
@@ -103,6 +105,8 @@ TEST COVERAGE PERCENTAGES:
 * `/internal/api	coverage: 100.0% of statements`
 * `/internal/service	coverage: 100.0% of statements`
 * `/internal/helper	coverage: 100.0% of statements`
+
+ <br/> 
 
 ### 🐛 REMOTE DEBUGGING:
 
